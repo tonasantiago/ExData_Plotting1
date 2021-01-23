@@ -23,10 +23,21 @@ rm(project_time_stamp)
 rm(temporal)
 
 
-# Data reading ------------------------------------------------------------
+# Data reading  and cleaning-------------------------------------------------------
 
 bdd <- fread("household_power_consumption.txt")
 bdd[bdd == "?"] <- NA
 bdd$Date <- as.Date(bdd$Date)
 bdd$Time <- as.POSIXct(bdd$Time,format="%H:%M:%S")
+bdd$Global_active_power <- as.numeric(bdd$Global_active_power)
 
+
+
+# #Graph 1 ----------------------------------------------------------------
+
+png(file = "plot1.png", width = 480, height = 480)
+hist(bdd$Global_active_power,
+     col = "red",
+     main = "Global Active Power",
+     xlab = "Global Active Power (kilowatts)")
+dev.off()
