@@ -24,20 +24,19 @@ library(dplyr)
 
 
 
-# Data reading  and cleaning-------------------------------------------------------
+# Data reading  and cleaning for plot 2------------------------------------
 
 bdd <- fread("household_power_consumption.txt")[Date == "1/2/2007"| Date == "2/2/2007"]
 bdd[bdd == "?"] <- NA
 bdd$Date <- as.Date(bdd$Date, format="%d/%m/%Y")
-bdd$Time <- as.POSIXct(bdd$Time,format="%H:%M:%S")
 bdd$Global_active_power <- as.numeric(bdd$Global_active_power)
+bdd$weekday <- as.POSIXct(strptime(paste(bdd$Date, bdd$Time, sep = " "),
+                                format = "%Y-%m-%d %H:%M:%S"))
+
 
 # #Plot 2 ----------------------------------------------------------------
 
 png(file = "plot2.png", width = 480, height = 480)
-with(DT,plot(posix,
-            Global_active_power,
-            type = "l",
-            xlab = "",
-            ylab = "Global Active Power (kilowatts)"))
+with(bdd, plot(weekday,Global_active_power,xlab="",
+     ylab="Global Active Power (kilowatts)",t="l"))
 dev.off()

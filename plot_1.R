@@ -23,7 +23,7 @@ rm(project_time_stamp)
 rm(temporal)
 
 
-# Data reading  and cleaning-------------------------------------------------------
+# Data reading  and cleaning for plot 1-------------------------------------------------------
 
 bdd <- fread("household_power_consumption.txt")[Date == "1/2/2007"| Date == "2/2/2007"]
 bdd[bdd == "?"] <- NA
@@ -31,7 +31,7 @@ bdd$Date <- as.Date(bdd$Date, format="%d/%m/%Y")
 bdd$Time <- as.POSIXct(bdd$Time,format="%H:%M:%S")
 bdd$Global_active_power <- as.numeric(bdd$Global_active_power)
 
-# #Graph 1 ----------------------------------------------------------------
+# #Plot 1 ----------------------------------------------------------------
 
 png(file = "plot1.png", width = 480, height = 480)
 hist(bdd$Global_active_power,
