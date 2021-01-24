@@ -25,13 +25,11 @@ rm(temporal)
 
 # Data reading  and cleaning-------------------------------------------------------
 
-bdd <- fread("household_power_consumption.txt")
+bdd <- fread("household_power_consumption.txt")[Date == "1/2/2007"| Date == "2/2/2007"]
 bdd[bdd == "?"] <- NA
-bdd$Date <- as.Date(bdd$Date)
+bdd$Date <- as.Date(bdd$Date, format="%d/%m/%Y")
 bdd$Time <- as.POSIXct(bdd$Time,format="%H:%M:%S")
 bdd$Global_active_power <- as.numeric(bdd$Global_active_power)
-
-
 
 # #Graph 1 ----------------------------------------------------------------
 
