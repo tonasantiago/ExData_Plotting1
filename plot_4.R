@@ -24,7 +24,7 @@ library(dplyr)
 
 
 
-# Data reading  and cleaning for plot 3------------------------------------
+# Data reading  and cleaning for plot 4------------------------------------
 
 bdd <- fread("household_power_consumption.txt")[Date == "1/2/2007"| Date == "2/2/2007"]
 bdd[bdd == "?"] <- NA
@@ -34,9 +34,29 @@ bdd$weekday <- as.POSIXct(strptime(paste(bdd$Date, bdd$Time, sep = " "),
                                 format = "%Y-%m-%d %H:%M:%S"))
 
 
-# #Plot 3 ----------------------------------------------------------------
+# #Plot 4 ----------------------------------------------------------------
 
-png(file = "plot3.png", width = 480, height = 480)
+png(file = "plot4.png", width = 480, height = 480)
+
+par(mfrow = c(2, 2))
+
+## Graph 1
+with(bdd,
+     plot(weekday,
+          Global_active_power,
+          type = "l",
+          xlab = "",
+          ylab = "Global Active Power"))
+
+## Graph 2
+with(bdd,
+     plot(weekday,
+          Voltage,
+          type = "l",
+          xlab = "datetime",
+          ylab = "Voltage"))
+
+## Graph 3
 with(bdd,
      plot(weekday,
           Sub_metering_1,
@@ -57,4 +77,13 @@ with(bdd,
 )
 legend("topright", col = c("black", "blue", "red"),
        legend = c("Sub_metering_1","Sub_metering_2", "Sub_metering_3"), lty = 1)
+
+## Graph 4
+with(bdd,
+     plot(weekday,
+          Global_reactive_power,
+          type = "l",
+          xlab = "datetime",
+          ylab = "Global_reactive_power"))
+
 dev.off()
